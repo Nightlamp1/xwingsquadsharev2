@@ -7,6 +7,6 @@ urlpatterns = [
     # url(r'^$', 'xwingv2.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^', include('viewer.urls')),
+    url(r'^$', views.home, name = 'home'),
+    url(r'^viewer/$', views.viewer, name = 'viewer'),
 ]
