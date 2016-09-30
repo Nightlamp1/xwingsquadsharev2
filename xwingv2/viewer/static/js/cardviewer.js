@@ -32,9 +32,10 @@ $(document).ready(function(){
 });
 
 function updateViewer(pilot){
+  //Image example
+  //<img src="{% static 'xwing-data/images/pilots/First Order/TIE-fo Fighter/epsilon-leader.png' %}">
   var currentPilot = $.grep(pilots, function(e){ return e.id == pilot; });
-  console.log("Made it into function");
-  console.log(currentPilot[0].name);
+  $("#viewer").html("<img src='../static/xwing-data/images/" +currentPilot[0].image + "'>" + "</img>");
   //BUILD THIS OUT
 }
 
@@ -49,19 +50,19 @@ function populateShipArray(pilotArray,factions){
 }
 
 function generateShipDropdowns(shipArray,faction){
-  var htmlString = "";
+  var htmlString = '<div class="btn-group-vertical" role="group" aria-label="...">';
   for(i=0;i<shipArray.length;i++){
     var shipID = shipArray[i].replace(/\s/g, '');
     shipID = shipID.replace("(","");
     shipID = shipID.replace(")","");
     shipID = shipID.replace("/","");
-    console.log(shipID);
-    htmlString += '<div class="dropdown">' +
+    htmlString += '<div class="btn-group" role="group">' +
                   '<button class="btn btn-default dropdown-toggle" type="button" id='+ shipID +
                   ' data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">' + shipArray[i] +
                   ' <span class="caret"> </span> </button>' +
                   '<ul class="dropdown-menu" aria-labelledby=' + shipID + ' id=' + shipID +
                   'pilots' + faction + '></ul></div>';
   }
+  htmlString += '</div>';
   $("#"+faction).append(htmlString);
 }

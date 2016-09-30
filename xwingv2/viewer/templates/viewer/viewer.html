@@ -16,14 +16,24 @@ var pilots = {{pilots|safe}};
     <li role="presentation"><a href="#Scum" aria-controls="Scum" role="tab" data-toggle="tab">Scum and Villainy</a></li>
   </ul>
 
-  <div class="tab-content">
-	  <div role="tabpanel" class="tab-pane active" id="Rebels">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="tab-content">
+    	  <div role="tabpanel" class="tab-pane active" id="Rebels">
+        </div>
+        <div role="tabpanel" class="tab-pane" id="Empire">
+        </div>
+        <div role="tabpanel" class="tab-pane" id="Scum">
+        </div>
+      </div>
     </div>
-    <div role="tabpanel" class="tab-pane" id="Empire">
-    </div>
-    <div role="tabpanel" class="tab-pane" id="Scum">
+    <div class="col-md-6">
+      <div id="viewer">
+      </div>
     </div>
   </div>
+</div>
 
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
