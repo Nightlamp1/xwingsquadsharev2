@@ -32,11 +32,9 @@ $(document).ready(function(){
 });
 
 function updateViewer(pilot){
-  //Image example
-  //<img src="{% static 'xwing-data/images/pilots/First Order/TIE-fo Fighter/epsilon-leader.png' %}">
+  //find pilot object and update viewer with static image link to display image to user
   var currentPilot = $.grep(pilots, function(e){ return e.id == pilot; });
   $("#viewer").html("<img src='../static/xwing-data/images/" +currentPilot[0].image + "'>" + "</img>");
-  //BUILD THIS OUT
 }
 
 function populateShipArray(pilotArray,factions){
