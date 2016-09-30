@@ -1,2 +1,13 @@
-<h1>This will be the viewer eventually</h1>
-{{pilots}}
+<script type='text/javascript'>
+var pilots = {{pilots|safe}};
+</script>
+
+<head>
+  {% load staticfiles %}
+  <title>"Xwing!!!!!"</title>
+</head>
+
+<body>
+  <h1>This will be the viewer eventually</h1>
+  <script type="text/javascript" src="{% static 'js/cardviewer.js'%}"></script>
+</body>
