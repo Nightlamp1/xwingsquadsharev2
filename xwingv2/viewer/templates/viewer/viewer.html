@@ -5,9 +5,24 @@ var pilots = {{pilots|safe}};
 <head>
   {% load staticfiles %}
   <title>"Xwing!!!!!"</title>
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" type = "text/css"/>
 </head>
 
 <body>
   <h1>This will be the viewer eventually</h1>
+
+  <div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="Rebels"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Rebels
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="Rebels" id="RebelPilots">
+  </ul>
+</div>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
   <script type="text/javascript" src="{% static 'js/cardviewer.js'%}"></script>
+  <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js'%}"></script>
 </body>
