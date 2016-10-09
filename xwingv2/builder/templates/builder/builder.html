@@ -1,5 +1,6 @@
 <script type='text/javascript'>
 var pilots = {{pilots|safe}};
+var ships = {{ships|safe}};
 </script>
 
 <head>
@@ -30,23 +31,6 @@ var pilots = {{pilots|safe}};
           <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content" id='pilots'>
               <!--current faction pilot data will generate here-->
-              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                  <div class="panel-heading" role="tab" id="headingOne">
-                    <h4 class="panel-title">
-                      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-controls="collapseOne">
-                        Collapsible Group Item #1
-                      </a>
-                    </h4>
-                  </div>
-                  <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                    <div class="panel-body">
-                      test1
-                    </div>
-                  </div>
-                </div>
-                
-
             </div>
           </div>
         </div>
@@ -54,6 +38,23 @@ var pilots = {{pilots|safe}};
     </div>
   </div>
 
+
+  <div style="display: none">
+    <div class="panel panel-default" id="template">
+      <div class="panel-heading" role="tab" id="headingOne">
+        <h4 class="panel-title">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-controls="collapseOne">
+            Heading
+          </a>
+        </h4>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">
+          content
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
   <script type="text/javascript" src="{% static 'js/squadbuilder.js'%}"></script>

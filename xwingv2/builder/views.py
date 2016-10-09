@@ -6,5 +6,7 @@ import json
 # Create your views here.
 def builder(request):
     pilots = open(os.path.join(settings.STATIC_ROOT,'xwing-data/data/pilots.js'))
+    ships = open(os.path.join(settings.STATIC_ROOT,'xwing-data/data/ships.js'))
     pilots = json.load(pilots)
-    return render(request,'builder/builder.html', {'pilots':json.dumps(pilots)})
+    ships = json.load(ships)
+    return render(request,'builder/builder.html', {'pilots':json.dumps(pilots),'ships':json.dumps(ships)})

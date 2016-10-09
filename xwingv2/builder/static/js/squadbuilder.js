@@ -1,15 +1,16 @@
 //pilots in pilots array
 
-var ships = {}
+var shipsByFaction = {}
 $(document).ready(function(){
   //Generate ship list
-  ships.rebels = populateShipArray(pilots,["Rebel Alliance","Resistance"]);
-  ships.empire = populateShipArray(pilots,["Galactic Empire", "First Order"]);
-  ships.scum = populateShipArray(pilots,["Scum and Villainy"]);
+  shipsByFaction.rebels = populateShipArray(pilots,["Rebel Alliance","Resistance"]);
+  shipsByFaction.empire = populateShipArray(pilots,["Galactic Empire", "First Order"]);
+  shipsByFaction.scum = populateShipArray(pilots,["Scum and Villainy"]);
 });
 
 function selectFaction(faction){
-  currentShips = ships[faction];
+  currentShips = shipsByFaction[faction];
+  generateHtml(currentShips);
 }
 
 function populateShipArray(pilotArray,factions){
@@ -20,4 +21,30 @@ function populateShipArray(pilotArray,factions){
     }
   }
   return shipArray;
+}
+
+
+function generateHtml(shipList){
+  var $outterdiv = $("<div>", {
+    "class":"panel-group",
+    id:"accordian",
+    "role":"tablist",
+    "aria-multiselectable":"true"
+  });
+
+  for(i=0;i<shipList.length;i++){
+    console.log(shipList[i]);
+    var shipxws = $.grep(ships, function(e){ return e.name == shipList[i]; });
+    shipxws = shipxws[0].xws;
+
+    var $temp = $("#template").clone();
+    $temp.attr('id','ship'+shipxws);
+    $temp.find("#headingOne").attr('id',shipxws);
+    $temp.find('a').attr({'href':'#c'+shipxws, 'aria-controls':"c"+shipxws});
+    $temp.find('#collapseOne').attr({'id':"c"+shipxws,'aria-labelledby':shipxws});
+
+    $outterdiv.append($temp);
+  }
+
+  $("#pilots").html($outterdiv);
 }
