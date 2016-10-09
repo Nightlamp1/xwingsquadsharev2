@@ -34,13 +34,14 @@ function generateHtml(shipList){
 
   for(i=0;i<shipList.length;i++){
     console.log(shipList[i]);
-    var shipxws = $.grep(ships, function(e){ return e.name == shipList[i]; });
-    shipxws = shipxws[0].xws;
+    var ship = $.grep(ships, function(e){ return e.name == shipList[i]; });
+    shipxws = ship[0].xws;
 
     var $temp = $("#template").clone();
     $temp.attr('id','ship'+shipxws);
     $temp.find("#headingOne").attr('id',shipxws);
     $temp.find('a').attr({'href':'#c'+shipxws, 'aria-controls':"c"+shipxws});
+    $temp.find('a').text(ship[0].name);
     $temp.find('#collapseOne').attr({'id':"c"+shipxws,'aria-labelledby':shipxws});
 
     $outterdiv.append($temp);
