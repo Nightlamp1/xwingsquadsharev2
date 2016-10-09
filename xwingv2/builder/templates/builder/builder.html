@@ -11,34 +11,43 @@ var pilots = {{pilots|safe}};
 
 <body>
   <ul class="nav nav-pills" id='factiontabs'>
-    <li class='active'><a onclick="selectFaction('rebels')" href="#Rebels" role="tab" data-toggle="tab">Rebel Alliance</a></li>
-    <li><a onclick="selectFaction('empire')" href="#Empire" role="tab" data-toggle="tab">Galactic Empire</a></li>
-    <li><a onclick="selectFaction('scum')" href="#Scum" role="tab" data-toggle="tab">Scum and Villainy</a></li>
+    <li class='active'><a onclick="selectFaction('rebels')" role="tab" data-toggle="tab">Rebel Alliance</a></li>
+    <li><a onclick="selectFaction('empire')" role="tab" data-toggle="tab">Galactic Empire</a></li>
+    <li><a onclick="selectFaction('scum')" role="tab" data-toggle="tab">Scum and Villainy</a></li>
   </ul>
 
   <div class="container-fluid">
-    <div class="row">
-      <!--move this stuff to modals-->
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">Your Current Squad</div>
-          <div class="panel-body" id="currentsquad">
+    <div class="panel panel-default">
+      <div class="panel-heading">Your Current Squad</div>
+      <div class="panel-body" id="currentsquad">
 
-            <button type="button" class="btn btn-primary" data-toggle="modal"
-            data-target=".pilot">Add a pilot
-            </button>
+        <button type="button" class="btn btn-primary" data-toggle="modal"
+        data-target=".pilot">Add a pilot
+        </button>
 
-            <div class="modal fade pilot" tabindex="-1"
-             role="dialog" aria-labelledby="pilots">
-              <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content" id='rebelpilots'>
-                  <div role="tabpanel" class="tab-pane active" id="pilots">
-                    <p>testetsetst</p>
+        <div class="modal fade pilot" tabindex="-1"
+         role="dialog" aria-labelledby="pilots">
+          <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content" id='pilots'>
+              <!--current faction pilot data will generate here-->
+              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                  <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-controls="collapseOne">
+                        Collapsible Group Item #1
+                      </a>
+                    </h4>
+                  </div>
+                  <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                      test1
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+                
 
+            </div>
           </div>
         </div>
       </div>
