@@ -10,29 +10,35 @@ var pilots = {{pilots|safe}};
 
 
 <body>
-  <ul class="nav nav-pills">
-    <li role="presentation"><a href="#Rebels" aria-controls="Rebels" role="tab" data-toggle="tab">Rebel Alliance</a></li>
-    <li role="presentation"><a href="#Empire" aria-controls="Empire" role="tab" data-toggle="tab">Galactic Empire</a></li>
-    <li role="presentation"><a href="#Scum" aria-controls="Scum" role="tab" data-toggle="tab">Scum and Villainy</a></li>
+  <ul class="nav nav-pills" id='factiontabs'>
+    <li class='active'><a onclick="selectFaction('rebels')" href="#Rebels" role="tab" data-toggle="tab">Rebel Alliance</a></li>
+    <li><a onclick="selectFaction('empire')" href="#Empire" role="tab" data-toggle="tab">Galactic Empire</a></li>
+    <li><a onclick="selectFaction('scum')" href="#Scum" role="tab" data-toggle="tab">Scum and Villainy</a></li>
   </ul>
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-2">
-        <div class="tab-content">
-      	  <div role="tabpanel" class="tab-pane active" id="Rebels">
-          </div>
-          <div role="tabpanel" class="tab-pane" id="Empire">
-          </div>
-          <div role="tabpanel" class="tab-pane" id="Scum">
-          </div>
-        </div>
-      </div>
-      <div class="col-md-10">
+      <!--move this stuff to modals-->
+      <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-heading">Your Current Squad</div>
           <div class="panel-body" id="currentsquad">
-            
+
+            <button type="button" class="btn btn-primary" data-toggle="modal"
+            data-target=".pilot">Add a pilot
+            </button>
+
+            <div class="modal fade pilot" tabindex="-1"
+             role="dialog" aria-labelledby="pilots">
+              <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content" id='rebelpilots'>
+                  <div role="tabpanel" class="tab-pane active" id="pilots">
+                    <p>testetsetst</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

@@ -8,9 +8,6 @@ $(document).ready(function(){
   var rebelShips = populateShipArray(pilots,rebels);
   var empireShips = populateShipArray(pilots,empire);
   var scumShips = populateShipArray(pilots,["Scum and Villainy"]);
-  generateShipDropdowns(rebelShips,"Rebels");
-  generateShipDropdowns(empireShips,"Empire");
-  generateShipDropdowns(scumShips,"Scum");
 
   //Iterate over pilot objects array to populate dropdowns
   for(i=0;i<pilots.length;i++){
@@ -31,6 +28,10 @@ $(document).ready(function(){
   }
 });
 
+function selectFaction(faction){
+  console.log(faction);
+}
+
 function populateShipArray(pilotArray,factions){
   var shipArray = [];
   for(i=0;i<pilotArray.length;i++){
@@ -39,26 +40,6 @@ function populateShipArray(pilotArray,factions){
     }
   }
   return shipArray;
-}
-
-
-
-function generateShipDropdowns(shipArray,faction){
-  var htmlString = '<div class="btn-group-vertical" role="group" aria-label="...">';
-  for(i=0;i<shipArray.length;i++){
-    var shipID = shipArray[i].replace(/\s/g, '');
-    shipID = shipID.replace("(","");
-    shipID = shipID.replace(")","");
-    shipID = shipID.replace("/","");
-    htmlString += '<div class="btn-group" role="group">' +
-                  '<button class="btn btn-default dropdown-toggle" type="button" id='+ shipID +
-                  ' data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">' + shipArray[i] +
-                  ' <span class="caret"> </span> </button>' +
-                  '<ul class="dropdown-menu" aria-labelledby=' + shipID + ' id=' + shipID +
-                  'pilots' + faction + '></ul></div>';
-  }
-  htmlString += '</div>';
-  $("#"+faction).append(htmlString);
 }
 
 function selectPilot(pilot){
