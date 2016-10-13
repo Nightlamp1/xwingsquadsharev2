@@ -44,7 +44,6 @@ function generateHtml(shipList,faction){
   });
 
   for(i=0;i<shipList.length;i++){
-    console.log(shipList[i]);
     var ship = $.grep(ships, function(e){ return e.name == shipList[i]; });
     shipxws = ship[0].xws;
 
@@ -71,6 +70,20 @@ function generateHtml(shipList,faction){
 }
 
 function addPilotToSquad(pilotId){
+  var $temp = $("#selected-pilot-template").clone();
+  var $upgrade = $("#upgrade-slot-template").clone();
   var currentPilot = $.grep(pilots, function(e){ return e.id == pilotId; });
-  $("#currentsquad").prepend("<img src='../static/xwing-data/images/" +currentPilot[0].image + "'>" + "</img>");
+  //need to come up with id scheme that allows multiple pilots
+  $temp.find(".squad-pilot").attr('src','../static/xwing-data/images/'+currentPilot[0].image);
+  $temp.attr('id',currentPilot[0].xws);//need to randomify
+
+  for(i=0;i<currentPilot[0].slots.length;i++){
+    console.log(currentPilot[0].slots[i]);
+    $currentUpgrade = $upgrade.clone();
+    $currentUpgrade.attr('id',currentPilot[0].name + currentPilot[0].slots[i]);
+    $currentUpgrade.text(currentPilot[0].slots[i]);
+    $temp.append($currentUpgrade);
+  }
+
+  $("#currentsquad").prepend($temp);
 }

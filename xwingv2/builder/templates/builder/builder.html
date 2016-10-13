@@ -66,13 +66,19 @@ after user presses the "Add Pilot" button on the builder page-->
 <!--Second template will be used for populating the pilot/upgrade structure after user
 selects a pilot in the "Add Pilot" menu system-->
 <div style="display: none">
-  <div class="row">
-    <div class="col-md-3 vcenter">
-    <img class="squad-pilot" style="height: 293px; width: 210px;" src="source">
-    <div class="col-md-1 vcenter">
-      Some upgrades
+  <div class="row" id="selected-pilot-template">
+    <div class="col-md-3 vcenter img_container">
+      <img class="squad-pilot" style="height: 293px; width: 210px;">
+      <button class="button">Remove</button>
     </div>
-  </div>
+    <div class="col-md-1 vcenter" id="upgrade-slot-template">
+      Modification
+    </div>
+</div>
+
+<!--upgrade slot template for builder view-->
+<div class="col-md-1 vcenter" id="upgrade-slot-template">
+  Some upgrades
 </div>
 
 <!--end templates-->

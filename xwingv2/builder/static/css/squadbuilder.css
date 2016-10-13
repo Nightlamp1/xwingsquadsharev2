@@ -1,0 +1,24 @@
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.squad-pilot {
+  height: 293px;
+  width: 210px;
+}
+
+.img_container {
+    position:relative;
+    display:inline-block;
+    text-align:center;
+}
+
+.button {
+    position:absolute;
+    bottom:250px;
+    right:75px;
+    width:100px;
+    height:30px;
+}
