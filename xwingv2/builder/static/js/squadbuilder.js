@@ -1,4 +1,5 @@
 //pilots in pilots array
+//ships in ships array
 
 var shipsByFaction = {}
 $(document).ready(function(){
@@ -10,7 +11,7 @@ $(document).ready(function(){
 
 function selectFaction(faction){
   currentShips = shipsByFaction[faction];
-  generateHtml(currentShips);
+  generateHtml(currentShips,faction);
 }
 
 function populateShipArray(pilotArray,factions){
@@ -24,7 +25,15 @@ function populateShipArray(pilotArray,factions){
 }
 
 
-function generateHtml(shipList){
+function generateHtml(shipList,faction){
+  var factionConversion = {
+    "Rebel Alliance": "rebels",
+    "Resistance": "rebels",
+    "Galactic Empire": "empire",
+    "First Order": "empire",
+    "Scum and Villainy": "scum"
+  };
+
   var $outterdiv = $("<div>", {
     "class":"panel-group",
     id:"accordian",
@@ -44,8 +53,22 @@ function generateHtml(shipList){
     $temp.find('a').text(ship[0].name);
     $temp.find('#collapseOne').attr({'id':"c"+shipxws,'aria-labelledby':shipxws});
 
+    var $pilots = $temp.find("#ship-pilots")
+    var pilotList = $.grep(pilots, function(pilot){ return pilot.ship == shipList[i]; });
+    for(j=0;j<pilotList.length;j++){
+      if(factionConversion[pilotList[j].faction] == faction){
+      $pilots.append("<li><a onclick=addPilotToSquad(" + pilotList[j].id + ")>" +
+                      pilotList[j].name + "</a></li>");
+    }}
+
+
     $outterdiv.append($temp);
   }
 
   $("#pilots").html($outterdiv);
+}
+
+function addPilotToSquad(pilotId){
+  var currentPilot = $.grep(pilots, function(e){ return e.id == pilotId; });
+  $("#currentsquad").prepend("<img src='../static/xwing-data/images/" +currentPilot[0].image + "'>" + "</img>");
 }
