@@ -7,6 +7,8 @@ $(document).ready(function(){
   shipsByFaction.rebels = populateShipArray(pilots,["Rebel Alliance","Resistance"]);
   shipsByFaction.empire = populateShipArray(pilots,["Galactic Empire", "First Order"]);
   shipsByFaction.scum = populateShipArray(pilots,["Scum and Villainy"]);
+  //Default faction is rebels. Populate necessary HTML for rebel ships/pilots
+  generateHtml(shipsByFaction["rebels"],"rebels");
 });
 
 function selectFaction(faction){
