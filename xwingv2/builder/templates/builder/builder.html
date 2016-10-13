@@ -7,6 +7,7 @@ var ships = {{ships|safe}};
   {% load staticfiles %}
   <title>"Squad builder"</title>
   <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" type = "text/css"/>
+  <link rel="stylesheet" href="{% static 'css/squadbuilder.css' %}" type = "text/css"/>
 </head>
 
 
@@ -21,7 +22,6 @@ var ships = {{ships|safe}};
     <div class="panel panel-default">
       <div class="panel-heading">Your Current Squad</div>
       <div class="panel-body" id="currentsquad">
-
         <button type="button" class="btn btn-primary" data-toggle="modal"
         data-target=".pilot">Add a pilot
         </button>
@@ -39,24 +39,43 @@ var ships = {{ships|safe}};
   </div>
 
 
-  <div style="display: none">
-    <div class="panel panel-default" id="template">
-      <div class="panel-heading" role="tab" id="headingOne">
-        <h4 class="panel-title">
-          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-controls="collapseOne">
-            <!--current ship name will populate here-->
-          </a>
-        </h4>
-      </div>
-      <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-        <div class="panel-body">
-          <ul id="ship-pilots">
-          <!--pilot list for current ship will populate here-->
-          </ul>
-        </div>
+
+<!--the following HTML will be hidden from the viewer and only used as templates for
+dynamic HTML population by squadbuilder.js-->
+
+<!--First template id=template will be used for population ship accordian selectors visible
+after user presses the "Add Pilot" button on the builder page-->
+<div style="display: none">
+  <div class="panel panel-default" id="template">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-controls="collapseOne">
+          <!--current ship name will populate here-->
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        <ul id="ship-pilots">
+        <!--pilot list for current ship will populate here-->
+        </ul>
       </div>
     </div>
   </div>
+</div>
+<!--Second template will be used for populating the pilot/upgrade structure after user
+selects a pilot in the "Add Pilot" menu system-->
+<div style="display: none">
+  <div class="row">
+    <div class="col-md-3 vcenter">
+    <img class="squad-pilot" style="height: 293px; width: 210px;" src="source">
+    <div class="col-md-1 vcenter">
+      Some upgrades
+    </div>
+  </div>
+</div>
+
+<!--end templates-->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
   <script type="text/javascript" src="{% static 'js/squadbuilder.js'%}"></script>
