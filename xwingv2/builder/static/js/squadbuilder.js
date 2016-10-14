@@ -72,7 +72,9 @@ function addPilotToSquad(pilotId){
   var $temp = $("#selected-pilot-template").clone();
   var $upgrade = $("#upgrade-slot-template").clone();
   var pilotUpgradeSlots = currentPilot[0].slots;
-  pilotUpgradeSlots.push('Modification');
+  if($.inArray('Modification',pilotUpgradeSlots)==-1){
+    pilotUpgradeSlots.push('Modification');
+  }
   //need to come up with id scheme that allows multiple pilots
   $temp.find(".squad-pilot").attr('src','../static/xwing-data/images/'+currentPilot[0].image);
   $temp.attr('id',currentPilot[0].xws);//need to randomify
@@ -86,10 +88,13 @@ function addPilotToSquad(pilotId){
 
 
     for(j=0;j<availableUpgrades.length;j++){
-        $currentUpgrade.find('#upgrade-list').append("<li id='temp'><a href='#'>" + availableUpgrades[j].name + "</a></li>");
-        $currentUpgrade.find('#temp').attr({'id':currentPilot[0].xws + pilotUpgradeSlots[i] + i,
-                                            'onclick':'selectUpgrade(' + availableUpgrades[j].id +
-                                            ',' + currentPilot[0].xws + pilotUpgradeSlots[i] + i + ')'});
+        var pilot = currentPilot[0].xws;
+        var upgradeName = availableUpgrades[j].name;
+        var upgradeHtmlId = pilot + pilotUpgradeSlots[i] + i
+        var selectUpgradeCall = 'selectUpgrade(' + availableUpgrades[j].id + ',' + upgradeHtmlId + ')';
+        $currentUpgrade.find('#upgrade-list').append("<li id='temp'><a href='#'>" + upgradeName + "</a></li>");
+        $currentUpgrade.find('#temp').attr({'id':upgradeHtmlId,
+                                            'onclick':selectUpgradeCall});
         $temp.append($currentUpgrade);
     }
   }
