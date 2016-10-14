@@ -3,7 +3,7 @@
 
 var shipsByFaction = {}
 $(document).ready(function(){
-  //Generate ship list
+  //Generate ship list by faction
   shipsByFaction.rebels = populateShipArray(pilots,["Rebel Alliance","Resistance"]);
   shipsByFaction.empire = populateShipArray(pilots,["Galactic Empire", "First Order"]);
   shipsByFaction.scum = populateShipArray(pilots,["Scum and Villainy"]);
@@ -70,18 +70,27 @@ function generateHtml(shipList,faction){
 }
 
 function addPilotToSquad(pilotId){
+  var currentPilot = $.grep(pilots, function(e){ return e.id == pilotId; });
   var $temp = $("#selected-pilot-template").clone();
   var $upgrade = $("#upgrade-slot-template").clone();
-  var currentPilot = $.grep(pilots, function(e){ return e.id == pilotId; });
+  var pilotUpgradeSlots = currentPilot[0].slots;
+  pilotUpgradeSlots.push('Modification');
   //need to come up with id scheme that allows multiple pilots
   $temp.find(".squad-pilot").attr('src','../static/xwing-data/images/'+currentPilot[0].image);
   $temp.attr('id',currentPilot[0].xws);//need to randomify
 
-  for(i=0;i<currentPilot[0].slots.length;i++){
-    console.log(currentPilot[0].slots[i]);
-    $currentUpgrade = $upgrade.clone();
-    $currentUpgrade.attr('id',currentPilot[0].name + currentPilot[0].slots[i]);
-    $currentUpgrade.text(currentPilot[0].slots[i]);
+  for(i=0;i<pilotUpgradeSlots.length;i++){
+    console.log(pilotUpgradeSlots[i]);
+    var $currentUpgrade = $upgrade.clone();
+    var availableUpgrades = $.grep(upgrades, function(e){ return e.slot == pilotUpgradeSlots[i]});
+    $currentUpgrade.find('#upgrade-type-pilot').text(pilotUpgradeSlots[i]);
+
+
+    for(j=0;j<availableUpgrades.length;j++){
+        $currentUpgrade.find('#upgrade-list').append("<li id='temp'><a href='#'>" + availableUpgrades[j].name + "</a></li>");
+        $currentUpgrade.find('#temp').attr('id',currentPilot[0].xws + pilotUpgradeSlots[i]);
+
+    }
     $temp.append($currentUpgrade);
   }
 

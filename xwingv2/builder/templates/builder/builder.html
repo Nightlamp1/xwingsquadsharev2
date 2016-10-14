@@ -1,6 +1,7 @@
 <script type='text/javascript'>
 var pilots = {{pilots|safe}};
 var ships = {{ships|safe}};
+var upgrades = {{upgrades|safe}};
 </script>
 
 <head>
@@ -71,14 +72,22 @@ selects a pilot in the "Add Pilot" menu system-->
       <img class="squad-pilot" style="height: 293px; width: 210px;">
       <button class="button">Remove</button>
     </div>
-    <div class="col-md-1 vcenter" id="upgrade-slot-template">
-      Modification
-    </div>
+  </div>
 </div>
 
+
 <!--upgrade slot template for builder view-->
-<div class="col-md-1 vcenter" id="upgrade-slot-template">
-  Some upgrades
+<div style="display: none">
+  <div class="col-md-1 vcenter" id="upgrade-slot-template">
+    <div class="dropdown">
+      <button class="btn btn-default dropdown-toggle" type="button" id="upgrade-type-pilot" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Dropdown
+        <span class="caret"></span>
+      </button>
+      <ul id="upgrade-list" class="dropdown-menu scrollable-menu" aria-labelledby="upgrade-type-pilot">
+      </ul>
+    </div>
+  </div>
 </div>
 
 <!--end templates-->

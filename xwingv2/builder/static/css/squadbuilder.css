@@ -17,8 +17,14 @@
 
 .button {
     position:absolute;
-    bottom:250px;
-    right:75px;
+    bottom:263px;
+    right:15px;
     width:100px;
     height:30px;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
 }
