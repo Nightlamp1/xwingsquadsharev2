@@ -61,14 +61,12 @@ function generateHtml(shipList,faction){
       $pilots.append("<li><a onclick=addPilotToSquad(" + pilotList[j].id + ")>" +
                       pilotList[j].name + "</a></li>");
     }}
-
-
     $outterdiv.append($temp);
   }
-
   $("#pilots").html($outterdiv);
 }
 
+//adding a pilot to the squad
 function addPilotToSquad(pilotId){
   var currentPilot = $.grep(pilots, function(e){ return e.id == pilotId; });
   var $temp = $("#selected-pilot-template").clone();
@@ -80,19 +78,31 @@ function addPilotToSquad(pilotId){
   $temp.attr('id',currentPilot[0].xws);//need to randomify
 
   for(i=0;i<pilotUpgradeSlots.length;i++){
-    console.log(pilotUpgradeSlots[i]);
     var $currentUpgrade = $upgrade.clone();
     var availableUpgrades = $.grep(upgrades, function(e){ return e.slot == pilotUpgradeSlots[i]});
+    $currentUpgrade.attr('id',currentPilot[0].xws + pilotUpgradeSlots[i] + i + 'slot');
     $currentUpgrade.find('#upgrade-type-pilot').text(pilotUpgradeSlots[i]);
+    $currentUpgrade.find('#upgrade-type-pilot').attr('id',currentPilot[0].xws + pilotUpgradeSlots[i] + i);
 
 
     for(j=0;j<availableUpgrades.length;j++){
         $currentUpgrade.find('#upgrade-list').append("<li id='temp'><a href='#'>" + availableUpgrades[j].name + "</a></li>");
-        $currentUpgrade.find('#temp').attr('id',currentPilot[0].xws + pilotUpgradeSlots[i]);
-
+        $currentUpgrade.find('#temp').attr({'id':currentPilot[0].xws + pilotUpgradeSlots[i] + i,
+                                            'onclick':'selectUpgrade(' + availableUpgrades[j].id +
+                                            ',' + currentPilot[0].xws + pilotUpgradeSlots[i] + i + ')'});
+        $temp.append($currentUpgrade);
     }
-    $temp.append($currentUpgrade);
   }
 
   $("#currentsquad").prepend($temp);
+}
+
+//add upgrade to selected pilot
+function selectUpgrade(upgrade,p){
+  console.log($(p).attr('id'));
+  var htmlObjectId = $(p).attr('id');
+  var selected = $.grep(upgrades, function(e){ return e.id == upgrade});
+  var upgradeImageLocation = '../static/xwing-data/images/' + selected[0].image;
+  $('#' + htmlObjectId + 'slot').html('<img class="upgrade" src="' + upgradeImageLocation + '">');
+  console.log(selected[0].name);
 }

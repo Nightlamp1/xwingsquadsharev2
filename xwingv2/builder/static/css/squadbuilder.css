@@ -9,6 +9,11 @@
   width: 210px;
 }
 
+.upgrade {
+  height: 150px;
+  width: 98px;
+}
+
 .img_container {
     position:relative;
     display:inline-block;
