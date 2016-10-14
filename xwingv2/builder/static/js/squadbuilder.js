@@ -104,10 +104,8 @@ function addPilotToSquad(pilotId){
 
 //add upgrade to selected pilot
 function selectUpgrade(upgrade,p){
-  console.log($(p).attr('id'));
   var htmlObjectId = $(p).attr('id');
   var selected = $.grep(upgrades, function(e){ return e.id == upgrade});
   var upgradeImageLocation = '../static/xwing-data/images/' + selected[0].image;
   $('#' + htmlObjectId + 'slot').html('<img class="upgrade" src="' + upgradeImageLocation + '">');
-  console.log(selected[0].name);
 }
