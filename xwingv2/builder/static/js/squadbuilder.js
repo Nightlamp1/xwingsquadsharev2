@@ -9,6 +9,7 @@ $(document).ready(function(){
   shipsByFaction.scum = populateShipArray(pilots,["Scum and Villainy"]);
   //Default faction is rebels. Populate necessary HTML for rebel ships/pilots
   generateHtml(shipsByFaction["rebels"],"rebels");
+
 });
 
 function selectFaction(faction){
@@ -89,7 +90,7 @@ function selectUpgrade(upgrade,p){
   var htmlObjectId = $(p).attr('id');
   var selected = $.grep(upgrades, function(e){ return e.id == upgrade});
   var upgradeImageLocation = '../static/xwing-data/images/' + selected[0].image;
-  $('#' + htmlObjectId + 'slot').html('<img class="upgrade" src="' + upgradeImageLocation + '">' +
+  $('#' + htmlObjectId + 'slot').html('<img id=' + upgrade + ' class="upgrade" src="' + upgradeImageLocation + '">' +
                                       '<button class="btn btn-danger" onclick="removeUpgrade(' +
                                       htmlObjectId + 'slot' + ',' + upgrade + ')"><span class="glyphicon glyphicon-remove"></span></button>');
 }
@@ -148,3 +149,13 @@ function populateOneUpgradeDropdown(upgradeSlotObjectId,upgradeObject){
   }
   $('#'+upgradeSlotObjectId).append($dropdownList);
 }
+
+$(document).on('click','.remove-pilot', function(){
+  var $pilotHtmlObject = $(this).parent().parent();
+  var selectedUpgrades = $pilotHtmlObject.find('img');
+  for(i=0;i<selectedUpgrades.length;i++){
+    console.log(selectedUpgrades[i].id);
+    //build in logic to remove upgrade cost from total cost
+  }
+  $pilotHtmlObject.remove();
+});
