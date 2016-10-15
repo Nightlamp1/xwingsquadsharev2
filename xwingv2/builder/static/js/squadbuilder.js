@@ -79,25 +79,7 @@ function addPilotToSquad(pilotId){
   $temp.find(".squad-pilot").attr('src','../static/xwing-data/images/'+currentPilot[0].image);
   $temp.attr('id',currentPilot[0].xws);//need to randomify
 
-  for(i=0;i<pilotUpgradeSlots.length;i++){
-    var $currentUpgrade = $upgrade.clone();
-    var availableUpgrades = $.grep(upgrades, function(e){ return e.slot == pilotUpgradeSlots[i]});
-    $currentUpgrade.attr('id',currentPilot[0].xws + pilotUpgradeSlots[i] + i + 'slot');
-    $currentUpgrade.find('#upgrade-type-pilot').text(pilotUpgradeSlots[i]);
-    $currentUpgrade.find('#upgrade-type-pilot').attr('id',currentPilot[0].xws + pilotUpgradeSlots[i] + i);
-
-
-    for(j=0;j<availableUpgrades.length;j++){
-        var pilot = currentPilot[0].xws;
-        var upgradeName = availableUpgrades[j].name;
-        var upgradeHtmlId = pilot + pilotUpgradeSlots[i] + i
-        var selectUpgradeCall = 'selectUpgrade(' + availableUpgrades[j].id + ',' + upgradeHtmlId + ')';
-        $currentUpgrade.find('#upgrade-list').append("<li id='temp'><a href='#'>" + upgradeName + "</a></li>");
-        $currentUpgrade.find('#temp').attr({'id':upgradeHtmlId,
-                                            'onclick':selectUpgradeCall});
-        $temp.append($currentUpgrade);
-    }
-  }
+  populateAllUpgradeDropdowns($temp,$upgrade,currentPilot,pilotUpgradeSlots);
 
   $("#currentsquad").prepend($temp);
 }
@@ -107,5 +89,62 @@ function selectUpgrade(upgrade,p){
   var htmlObjectId = $(p).attr('id');
   var selected = $.grep(upgrades, function(e){ return e.id == upgrade});
   var upgradeImageLocation = '../static/xwing-data/images/' + selected[0].image;
-  $('#' + htmlObjectId + 'slot').html('<img class="upgrade" src="' + upgradeImageLocation + '">');
+  $('#' + htmlObjectId + 'slot').html('<img class="upgrade" src="' + upgradeImageLocation + '">' +
+                                      '<button class="btn btn-danger" onclick="removeUpgrade(' +
+                                      htmlObjectId + 'slot' + ',' + upgrade + ')"><span class="glyphicon glyphicon-remove"></span></button>');
+}
+
+//remove an upgrade from pilot
+function removeUpgrade(pilot,upgrade){
+  var upgradeObject = $.grep(upgrades, function(e){ return e.id == upgrade});
+  upgradeObject = upgradeObject[0];
+  divObjectId = $(pilot).attr('id');
+  $("#"+divObjectId).empty();
+  populateOneUpgradeDropdown(divObjectId,upgradeObject);
+  console.log("remove it!");
+  console.log(divObjectId);
+  console.log(upgradeObject.slot);
+}
+
+function populateAllUpgradeDropdowns($temp,$upgrade,currentPilot,pilotUpgradeSlots){
+  //create a button for every upgrade type the current pilot has available
+  for(i=0;i<pilotUpgradeSlots.length;i++){
+    var $currentUpgrade = $upgrade.clone();
+    var upgradeSlotName = pilotUpgradeSlots[i];
+    var availableUpgrades = $.grep(upgrades, function(e){ return e.slot == upgradeSlotName});
+    $currentUpgrade.attr('id',currentPilot[0].xws + upgradeSlotName + i + 'slot');
+    $currentUpgrade.find('#upgrade-type-pilot').text(upgradeSlotName);
+    $currentUpgrade.find('#upgrade-type-pilot').attr('id',currentPilot[0].xws + upgradeSlotName + i);
+    $currentUpgrade.find('.dropdown-template').attr('class','dropdown');
+
+    //populate dropdowns with all upgrades of the current type
+    for(j=0;j<availableUpgrades.length;j++){
+        var pilot = currentPilot[0].xws;
+        var upgradeName = availableUpgrades[j].name;
+        var upgradeHtmlId = pilot + upgradeSlotName + i
+        var selectUpgradeCall = 'selectUpgrade(' + availableUpgrades[j].id + ',' + upgradeHtmlId + ')';
+        $currentUpgrade.find('#upgrade-list').append("<li id='temp'><a href='#'>" + upgradeName + "</a></li>");
+        $currentUpgrade.find('#temp').attr({'id':upgradeHtmlId,
+                                            'onclick':selectUpgradeCall});
+        $temp.append($currentUpgrade);
+    }
+  }
+}
+
+function populateOneUpgradeDropdown(upgradeSlotObjectId,upgradeObject){
+  innerHtmlId = upgradeSlotObjectId.slice(0,-4);
+  var $dropdownList = $('.dropdown-template').clone();
+  var availableUpgrades = $.grep(upgrades, function(e){ return e.slot == upgradeObject.slot});
+  $dropdownList.find('#upgrade-type-pilot').text(upgradeObject.slot);
+  $dropdownList.find('#upgrade-type-pilot').attr('id',innerHtmlId);
+  $dropdownList.attr('class','dropdown');
+
+  for(j=0;j<availableUpgrades.length;j++){
+      var upgradeName = availableUpgrades[j].name;
+      var selectUpgradeCall = 'selectUpgrade(' + availableUpgrades[j].id + ',' + innerHtmlId + ')';
+      $dropdownList.find('#upgrade-list').append("<li id='temp'><a href='#'>" + upgradeName + "</a></li>");
+      $dropdownList.find('#temp').attr({'id':innerHtmlId,
+                                          'onclick':selectUpgradeCall});
+  }
+  $('#'+upgradeSlotObjectId).append($dropdownList);
 }
