@@ -1,8 +1,10 @@
 //pilots in pilots array
 //ships in ships array
 
-var shipsByFaction = {}
+var shipsByFaction = {};
+var squadCost = 0;
 $(document).ready(function(){
+
   //Generate ship list by faction
   shipsByFaction.rebels = populateShipArray(pilots,["Rebel Alliance","Resistance"]);
   shipsByFaction.empire = populateShipArray(pilots,["Galactic Empire", "First Order"]);
@@ -70,6 +72,8 @@ function generateHtml(shipList,faction){
 //adding a pilot to the squad
 function addPilotToSquad(pilotId){
   var currentPilot = $.grep(pilots, function(e){ return e.id == pilotId; });
+  squadCost += currentPilot[0].points;
+  updateSquadCost();
   var $temp = $("#selected-pilot-template").clone();
   var $upgrade = $("#upgrade-slot-template").clone();
   var pilotUpgradeSlots = currentPilot[0].slots;
@@ -89,6 +93,8 @@ function addPilotToSquad(pilotId){
 function selectUpgrade(upgrade,p){
   var htmlObjectId = $(p).attr('id');
   var selected = $.grep(upgrades, function(e){ return e.id == upgrade});
+  squadCost += selected[0].points;
+  updateSquadCost();
   var upgradeImageLocation = '../static/xwing-data/images/' + selected[0].image;
   $('#' + htmlObjectId + 'slot').html('<img id=' + upgrade + ' class="upgrade" src="' + upgradeImageLocation + '">' +
                                       '<button class="btn btn-danger" onclick="removeUpgrade(' +
@@ -99,12 +105,11 @@ function selectUpgrade(upgrade,p){
 function removeUpgrade(pilot,upgrade){
   var upgradeObject = $.grep(upgrades, function(e){ return e.id == upgrade});
   upgradeObject = upgradeObject[0];
+  squadCost -= upgradeObject.points;
+  updateSquadCost();
   divObjectId = $(pilot).attr('id');
   $("#"+divObjectId).empty();
   populateOneUpgradeDropdown(divObjectId,upgradeObject);
-  console.log("remove it!");
-  console.log(divObjectId);
-  console.log(upgradeObject.slot);
 }
 
 function populateAllUpgradeDropdowns($temp,$upgrade,currentPilot,pilotUpgradeSlots){
@@ -152,10 +157,19 @@ function populateOneUpgradeDropdown(upgradeSlotObjectId,upgradeObject){
 
 $(document).on('click','.remove-pilot', function(){
   var $pilotHtmlObject = $(this).parent().parent();
+  var currentPilot = $.grep(pilots, function(xws){ return xws.xws == $pilotHtmlObject.attr('id')});
+  squadCost -= currentPilot[0].points;
   var selectedUpgrades = $pilotHtmlObject.find('img');
   for(i=0;i<selectedUpgrades.length;i++){
-    console.log(selectedUpgrades[i].id);
-    //build in logic to remove upgrade cost from total cost
+    if(selectedUpgrades[i].id != ""){
+      var currentUpgrade = $.grep(upgrades, function(id){ return id.id == selectedUpgrades[i].id});
+      squadCost -= currentUpgrade[0].points;
+    }
   }
+  updateSquadCost();
   $pilotHtmlObject.remove();
 });
+
+function updateSquadCost(){
+  $("#cost").text('  (' + squadCost + '/100)');
+}
