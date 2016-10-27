@@ -3,6 +3,7 @@
 
 var shipsByFaction = {};
 var squadCost = 0;
+var currentPilotCode = 1;
 $(document).ready(function(){
 
   //Generate ship list by faction
@@ -80,11 +81,12 @@ function addPilotToSquad(pilotId){
   if($.inArray('Modification',pilotUpgradeSlots)==-1){
     pilotUpgradeSlots.push('Modification');
   }
-  //need to come up with id scheme that allows multiple pilots
+  //need to come up with id scheme that allows multiple of one pilot
   $temp.find(".squad-pilot").attr('src','../static/xwing-data/images/'+currentPilot[0].image);
-  $temp.attr('id',currentPilot[0].xws);//need to randomify
+  $temp.attr('id',currentPilot[0].xws+currentPilotCode);//need to randomify
 
   populateAllUpgradeDropdowns($temp,$upgrade,currentPilot,pilotUpgradeSlots);
+  currentPilotCode+=1;
 
   $("#currentsquad").prepend($temp);
 }
@@ -118,14 +120,14 @@ function populateAllUpgradeDropdowns($temp,$upgrade,currentPilot,pilotUpgradeSlo
     var $currentUpgrade = $upgrade.clone();
     var upgradeSlotName = pilotUpgradeSlots[i];
     var availableUpgrades = $.grep(upgrades, function(e){ return e.slot == upgradeSlotName});
-    $currentUpgrade.attr('id',currentPilot[0].xws + upgradeSlotName + i + 'slot');
+    $currentUpgrade.attr('id',currentPilot[0].xws + currentPilotCode + upgradeSlotName + i + 'slot');
     $currentUpgrade.find('#upgrade-type-pilot').text(upgradeSlotName);
     $currentUpgrade.find('#upgrade-type-pilot').attr('id',currentPilot[0].xws + upgradeSlotName + i);
     $currentUpgrade.find('.dropdown-template').attr('class','dropdown');
 
     //populate dropdowns with all upgrades of the current type
     for(j=0;j<availableUpgrades.length;j++){
-        var pilot = currentPilot[0].xws;
+        var pilot = currentPilot[0].xws + currentPilotCode;
         var upgradeName = availableUpgrades[j].name;
         var upgradeHtmlId = pilot + upgradeSlotName + i
         var selectUpgradeCall = 'selectUpgrade(' + availableUpgrades[j].id + ',' + upgradeHtmlId + ')';
@@ -157,7 +159,8 @@ function populateOneUpgradeDropdown(upgradeSlotObjectId,upgradeObject){
 
 $(document).on('click','.remove-pilot', function(){
   var $pilotHtmlObject = $(this).parent().parent();
-  var currentPilot = $.grep(pilots, function(xws){ return xws.xws == $pilotHtmlObject.attr('id')});
+  var cleanPilotXws = $pilotHtmlObject.attr('id').replace(/\d+$/,"");
+  var currentPilot = $.grep(pilots, function(xws){ return xws.xws == cleanPilotXws});
   squadCost -= currentPilot[0].points;
   var selectedUpgrades = $pilotHtmlObject.find('img');
   for(i=0;i<selectedUpgrades.length;i++){
