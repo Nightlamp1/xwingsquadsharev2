@@ -70,6 +70,7 @@ function populateAllUpgradeDropdowns($temp,$upgrade,currentPilot,pilotUpgradeSlo
     $currentUpgrade.find('#upgrade-type-pilot').text(upgradeSlotName);
     $currentUpgrade.find('#upgrade-type-pilot').attr('id',currentPilot[0].xws + upgradeSlotName + i);
     $currentUpgrade.find('.dropdown-template').attr('class','dropdown');
+    $temp.find('.upgrade-layout').append('<div class="col-md-2" id=' + currentPilot[0].xws + currentPilotCode + upgradeSlotName + i + 'display></div>');
 
     //populate dropdowns with all upgrades of the current type
     for(j=0;j<availableUpgrades.length;j++){
@@ -140,7 +141,8 @@ function selectUpgrade(upgrade,p){
   squadCost += selected[0].points;
   updateSquadCost();
   var upgradeImageLocation = '../static/xwing-data/images/' + selected[0].image;
-  $('#' + htmlObjectId + 'slot').html('<img id=' + upgrade + ' class="upgrade" src="' + upgradeImageLocation + '">' +
+  $('#' + htmlObjectId + 'slot').empty();
+  $('#' + htmlObjectId + 'display').html('<img id=' + upgrade + ' class="upgrade" src="' + upgradeImageLocation + '">' +
                                       '<button class="test btn btn-danger" onclick="removeUpgrade(' +
                                       htmlObjectId + 'slot' + ',' + upgrade + ')"><span class="glyphicon glyphicon-remove"></span></button>');
 }
@@ -152,7 +154,7 @@ function removeUpgrade(pilot,upgrade){
   squadCost -= upgradeObject.points;
   updateSquadCost();
   divObjectId = $(pilot).attr('id');
-  $("#"+divObjectId).empty();
+  $("#"+divObjectId.replace('slot','display')).empty();
   populateOneUpgradeDropdown(divObjectId,upgradeObject);
 }
 
