@@ -35,7 +35,7 @@ $(document).ready(function(){
 function updateViewer(pilot){
   //find pilot object and update viewer with static image link to display image to user
   var currentPilot = $.grep(pilots, function(e){ return e.id == pilot; });
-  $("#viewer").html("<img src='../static/xwing-data/images/" +currentPilot[0].image + "'>" + "</img>");
+  $("#currentsquad").html("<img src='../static/xwing-data/images/" +currentPilot[0].image + "'>" + "</img>");
 }
 
 function populateShipArray(pilotArray,factions){

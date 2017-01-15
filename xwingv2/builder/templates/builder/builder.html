@@ -20,7 +20,7 @@ var upgrades = {{upgrades|safe}};
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-2">
       <div class="tab-content">
     	  <div role="tabpanel" class="tab-pane active" id="Rebels">
         </div>
@@ -30,9 +30,12 @@ var upgrades = {{upgrades|safe}};
         </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div id="viewer">
-      </div>
+    <div class="col-md-10">
+          <div class="panel panel-default">
+            <div class="panel-heading">Your Current Squad<span id='cost'> (0/100) </span></div>
+            <div class="panel-body" id="currentsquad">
+            </div>
+          </div>
     </div>
   </div>
 </div>
@@ -43,4 +46,6 @@ var upgrades = {{upgrades|safe}};
   <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js'%}"></script>
 </body>
 
-<!--end templates-->
+
+
+<!--templates-->
