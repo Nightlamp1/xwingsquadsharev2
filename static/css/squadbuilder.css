@@ -1,0 +1,33 @@
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.squad-pilot {
+  height: 293px;
+  width: 210px;
+}
+
+.upgrade {
+  height: 210px;
+  width: 138px;
+}
+
+.img_container {
+    position:relative;
+    display:inline-block;
+    text-align:center;
+}
+
+.button {
+    position:absolute;
+    bottom:263px;
+    right:15px;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}

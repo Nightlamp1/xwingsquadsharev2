@@ -1,0 +1,100 @@
+<script type='text/javascript'>
+var pilots = {{pilots|safe}};
+var ships = {{ships|safe}};
+var upgrades = {{upgrades|safe}};
+</script>
+
+<head>
+  {% load staticfiles %}
+  <title>"Squad builder"</title>
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" type = "text/css"/>
+  <link rel="stylesheet" href="{% static 'css/squadbuilder.css' %}" type = "text/css"/>
+</head>
+
+
+<body>
+  <ul class="nav nav-pills" id='factiontabs'>
+    <li class='active'><a onclick="selectFaction('rebels')" role="tab" data-toggle="tab">Rebel Alliance</a></li>
+    <li><a onclick="selectFaction('empire')" role="tab" data-toggle="tab">Galactic Empire</a></li>
+    <li><a onclick="selectFaction('scum')" role="tab" data-toggle="tab">Scum and Villainy</a></li>
+  </ul>
+
+  <div class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-heading">Your Current Squad<span id='cost'> (0/100) </span></div>
+      <div class="panel-body" id="currentsquad">
+        <div class="text-center">
+          <button type="button" class="btn btn-primary" data-toggle="modal"
+          data-target=".pilot">Add a pilot
+          </button>
+        </div>
+
+        <div class="modal fade pilot" tabindex="-1"
+         role="dialog" aria-labelledby="pilots">
+          <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content" id='pilots'>
+              <!--current faction pilot data will generate here-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<!--the following HTML will be hidden from the viewer and only used as templates for
+dynamic HTML population by squadbuilder.js-->
+
+<!--First template id=template will be used for population ship accordian selectors visible
+after user presses the "Add Pilot" button on the builder page-->
+<div style="display: none">
+  <div class="panel panel-default" id="template">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-controls="collapseOne">
+          <!--current ship name will populate here-->
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        <ul id="ship-pilots">
+        <!--pilot list for current ship will populate here-->
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Second template will be used for populating the pilot/upgrade structure after user
+selects a pilot in the "Add Pilot" menu system-->
+<div style="display: none">
+  <div class="row" id="selected-pilot-template">
+    <div class="col-md-3 vcenter img_container">
+      <img class="squad-pilot">
+      <button class="button btn btn-danger remove-pilot"><span class="glyphicon glyphicon-remove"></span></button>
+    </div>
+  </div>
+</div>
+
+
+<!--upgrade slot template for builder view-->
+<div style="display: none">
+  <div class="col-md-2 vcenter" id="upgrade-slot-template">
+    <div class="dropdown-template">
+      <button class="btn btn-default dropdown-toggle" type="button" id="upgrade-type-pilot" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Dropdown
+        <span class="caret"></span>
+      </button>
+      <ul id="upgrade-list" class="dropdown-menu scrollable-menu" aria-labelledby="upgrade-type-pilot">
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!--end templates-->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script type="text/javascript" src="{% static 'js/squadbuilder.js'%}"></script>
+  <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js'%}"></script>
+</body>
