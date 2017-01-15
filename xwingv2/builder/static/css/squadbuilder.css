@@ -26,6 +26,12 @@
     right:15px;
 }
 
+.test{
+    position:absolute;
+    bottom:180px;
+    right:30px;
+}
+
 .scrollable-menu {
     height: auto;
     max-height: 200px;

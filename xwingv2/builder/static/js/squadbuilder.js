@@ -21,7 +21,7 @@ $(document).ready(function(){
   //Iterate over pilot objects array to populate dropdowns
   for(i=0;i<pilots.length;i++){
     //Populate html dropdowns with pilots from respective factions
-    var listString = "<li><a onclick=updateViewer("+pilots[i].id+ ");>" + pilots[i].name + "</a></li>";
+    var listString = "<li><a onclick=addPilotToSquad("+pilots[i].id+ ");>" + pilots[i].name + "</a></li>";
     var shipID = pilots[i].ship.replace(/\s/g, '') + "pilots";
     shipID = shipID.replace("(","");
     shipID = shipID.replace(")","");
@@ -37,7 +37,7 @@ $(document).ready(function(){
   }
 });
 
-function updateViewer(pilotId){
+function addPilotToSquad(pilotId){
   //find pilot object and update viewer with static image link to display image to user
   //var currentPilot = $.grep(pilots, function(e){ return e.id == pilot; });
   //$("#currentsquad").html("<img src='../static/xwing-data/images/" +currentPilot[0].image + "'>" + "</img>");
@@ -80,7 +80,7 @@ function populateAllUpgradeDropdowns($temp,$upgrade,currentPilot,pilotUpgradeSlo
         $currentUpgrade.find('#upgrade-list').append("<li id='temp'><a href='#'>" + upgradeName + "</a></li>");
         $currentUpgrade.find('#temp').attr({'id':upgradeHtmlId,
                                             'onclick':selectUpgradeCall});
-        $temp.append($currentUpgrade);
+        $temp.find('.pilot-upgrades').append($currentUpgrade);
     }
   }
 }
@@ -141,7 +141,7 @@ function selectUpgrade(upgrade,p){
   updateSquadCost();
   var upgradeImageLocation = '../static/xwing-data/images/' + selected[0].image;
   $('#' + htmlObjectId + 'slot').html('<img id=' + upgrade + ' class="upgrade" src="' + upgradeImageLocation + '">' +
-                                      '<button class="btn btn-danger" onclick="removeUpgrade(' +
+                                      '<button class="test btn btn-danger" onclick="removeUpgrade(' +
                                       htmlObjectId + 'slot' + ',' + upgrade + ')"><span class="glyphicon glyphicon-remove"></span></button>');
 }
 
